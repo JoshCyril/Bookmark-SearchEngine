@@ -59,10 +59,12 @@ class CollectionResource extends Resource
                         Forms\Components\Select::make('categories')
                             ->multiple()
                             ->relationship('categories', 'title'),
-                        Forms\Components\TextInput::make('user_id')
+                        Select::make('user_id')
+                            ->label('Owner')
+                            ->relationship('user', 'name')
                             ->default(auth()->id())
                             // ->hidden(true)
-                            ->readOnly(),
+                            ->disabled(),
                 ])->columnSpan(4),
             ])->columns(12);
     }
@@ -72,6 +74,7 @@ class CollectionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
+                    ->label('Owner')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('title')

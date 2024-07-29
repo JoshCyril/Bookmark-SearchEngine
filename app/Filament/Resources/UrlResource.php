@@ -7,6 +7,7 @@ use App\Filament\Resources\UrlResource\RelationManagers;
 use App\Models\Collection;
 use App\Models\Url;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -59,6 +60,12 @@ class UrlResource extends Resource
                             ->relationship('categories', 'title'),
                         Forms\Components\Select::make('collection')
                             ->relationship('collection', 'title'),
+                        Select::make('user_id')
+                      ->label('Owner')
+                            ->relationship('user', 'name')
+                            ->default(auth()->id())
+                            // ->hidden(true)
+                            ->disabled(),
                 ])->columnSpan(4)
             ])->columns(12);
     }
