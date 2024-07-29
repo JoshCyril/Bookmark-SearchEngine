@@ -56,12 +56,15 @@ class UrlResource extends Resource
                     ->schema([
                         Forms\Components\FileUpload::make('thumbnail'),
                         Forms\Components\Select::make('categories')
+                            ->required()
                             ->multiple()
                             ->relationship('categories', 'title'),
-                        Forms\Components\Select::make('collection')
+                        Select::make('collection_id')
+                            ->required()
+                            ->label('Collection')
                             ->relationship('collection', 'title'),
                         Select::make('user_id')
-                      ->label('Owner')
+                            ->label('Owner')
                             ->relationship('user', 'name')
                             ->default(auth()->id())
                             // ->hidden(true)
@@ -74,14 +77,17 @@ class UrlResource extends Resource
     {
         return $table
             ->columns([
+
+                // TextColumn::make('title')
+                //     ->description(fn (Url $record): string => $record->body),
                 Tables\Columns\TextColumn::make('url')
+                    ->searchable(),
+                Tables\Columns\IconColumn::make('active')
+                    ->boolean(),
+                Tables\Columns\TextColumn::make('collection.title')
                     ->searchable(),
                 Tables\Columns\ImageColumn::make('thumbnail')
                     ->searchable(),
-                TextColumn::make('title')
-                    ->description(fn (Url $record): string => $record->body),
-                Tables\Columns\IconColumn::make('active')
-                    ->boolean(),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()

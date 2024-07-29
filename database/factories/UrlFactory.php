@@ -21,6 +21,9 @@ class UrlFactory extends Factory
             'user_id' => fake()->randomElement(
                 \App\Models\User::pluck('id', 'id')->toArray()
             ), // picks id from UserDetails table randomly
+            'collection_id' => fake()->randomElement(
+                \App\Models\Collection::pluck('id', 'id')->toArray()
+            ), // picks id from Collection table randomly
             'title'=>$title,
             'url'=>fake()->url(),
             'thumbnail'=> fake()->imageUrl(640, 480, null, true),

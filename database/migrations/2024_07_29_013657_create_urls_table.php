@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('urls', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\User::class, 'user_id');
+            $table->foreignIdFor(\App\Models\Collection::class, 'collection_id');
             $table->string('title', 2048);
             $table->string('url');
             $table->string('thumbnail')->nullable();
@@ -24,6 +25,9 @@ return new class extends Migration
 
             $table->foreign('user_id')->references('id')
                 ->on('users')->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->foreign('collection_id')->references('id')
+                ->on('collections')->onDelete('cascade')
                 ->onUpdate('cascade');
         });
     }

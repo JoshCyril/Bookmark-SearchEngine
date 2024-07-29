@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Repeater;
 
 class CollectionResource extends Resource
 {
@@ -66,6 +67,16 @@ class CollectionResource extends Resource
                             // ->hidden(true)
                             ->disabled(),
                 ])->columnSpan(4),
+
+            Forms\Components\Card::make()
+                ->schema([
+                        Repeater::make('urls')
+                        ->simple(
+                            Select::make('urls')
+                            ->relationship('urls', 'url')
+                            // ->disabled(),
+                        )
+                ])->columnSpan(12),
             ])->columns(12);
     }
 
