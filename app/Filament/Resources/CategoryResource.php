@@ -28,7 +28,7 @@ class CategoryResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('title')
-                    ->required()->minLength(3)->maxLength (124)
+                    ->required()->minLength(2)->maxLength (124)
                     ->reactive()
                     ->afterStateUpdated(function(string $operation, $state, Forms\Set $set){
                         if($operation === 'edit'){

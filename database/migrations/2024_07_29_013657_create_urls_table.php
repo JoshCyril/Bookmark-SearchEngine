@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('urls', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->unsigned();
+            $table->foreignIdFor(\App\Models\User::class, 'user_id');
             $table->string('title', 2048);
             $table->string('url');
             $table->string('thumbnail')->nullable();

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('collections', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->unsigned();
+            $table->foreignIdFor(\App\Models\User::class, 'user_id');
             $table->string('title', 2048);
             $table->string('slug', 2048);
             $table->string('thumbnail')->nullable();

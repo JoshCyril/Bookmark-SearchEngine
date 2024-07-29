@@ -46,12 +46,12 @@ class User extends Authenticatable
         ];
     }
 
-    public function Urls(): HasMany
+    public function urls(): HasMany
     {
         return $this->hasMany(Url::class);
     }
 
-    public function Collections(): HasMany
+    public function collections(): HasMany
     {
         return $this->hasMany(Collection::class);
     }

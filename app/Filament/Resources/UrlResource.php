@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CollectionResource\Pages;
-use App\Filament\Resources\CollectionResource\RelationManagers;
+use App\Filament\Resources\UrlResource\Pages;
+use App\Filament\Resources\UrlResource\RelationManagers;
 use App\Models\Collection;
+use App\Models\Url;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -14,42 +15,39 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\Select;
 
-class CollectionResource extends Resource
+class UrlResource extends Resource
 {
-    protected static ?string $model = Collection::class;
+    protected static ?string $model = Url::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-group';
+    protected static ?string $navigationIcon = 'heroicon-o-link';
 
     protected static ?string $navigationGroup = 'Content';
 
     public static function form(Form $form): Form
     {
         return $form
+        ->schema([Forms\Components\Card::make()
             ->schema([
-                Forms\Components\Card::make()
-                ->schema([
-
                 Forms\Components\TextInput::make('title')
-                    ->required()->minLength(4)->maxLength (2048)
-                    ->reactive()
-                    ->afterStateUpdated(function(string $operation, $state, Forms\Set $set){
+                ->required()->minLength(4)->maxLength (2048)
+                ->reactive()
+                ->afterStateUpdated(function(string $operation, $state, Forms\Set $set){
                         if($operation === 'edit'){
                             return;
                         }
 
                     $set('slug', Str::slug($state));
                 }),
-                Forms\Components\TextInput::make('slug')
+                Forms\Components\TextInput::make('url')
                     ->required()
-                    ->maxLength(2048),
-                Forms\Components\RichEditor::make('body')
+                    ->url()
+                    ->suffixIcon('heroicon-m-globe-alt')
+                    ->maxLength(255),
+                Forms\Components\Textarea::make('body')
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\Toggle::make('active')
-                    ->required(),
-                Forms\Components\DateTimePicker::make('published_at')
                     ->required(),
             ])->columnSpan(8),
 
@@ -59,11 +57,9 @@ class CollectionResource extends Resource
                         Forms\Components\Select::make('categories')
                             ->multiple()
                             ->relationship('categories', 'title'),
-                        Forms\Components\TextInput::make('user_id')
-                            ->default(auth()->id())
-                            // ->hidden(true)
-                            ->readOnly(),
-                ])->columnSpan(4),
+                        Forms\Components\Select::make('collection')
+                            ->relationship('collection', 'title'),
+                ])->columnSpan(4)
             ])->columns(12);
     }
 
@@ -71,22 +67,21 @@ class CollectionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.name')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('title')
-                    ->description(fn (Collection $record): string => $record->body),
-                Tables\Columns\IconColumn::make('active')
-                    ->boolean(),
+                Tables\Columns\TextColumn::make('url')
+                    ->searchable(),
                 Tables\Columns\ImageColumn::make('thumbnail')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('published_at')
-                    ->dateTime()
-                    ->sortable(),
+                TextColumn::make('title')
+                    ->description(fn (Url $record): string => $record->body),
+                Tables\Columns\IconColumn::make('active')
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('user.name')
+                //     ->numeric()
+                //     ->sortable(),
             ])
             ->filters([
                 //
@@ -113,10 +108,10 @@ class CollectionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCollections::route('/'),
-            'create' => Pages\CreateCollection::route('/create'),
-            'view' => Pages\ViewCollection::route('/{record}'),
-            'edit' => Pages\EditCollection::route('/{record}/edit'),
+            'index' => Pages\ListUrls::route('/'),
+            'create' => Pages\CreateUrl::route('/create'),
+            'view' => Pages\ViewUrl::route('/{record}'),
+            'edit' => Pages\EditUrl::route('/{record}/edit'),
         ];
     }
 }
