@@ -7,11 +7,13 @@
     "require": {
         "php": "^8.2",
         "brunocfalcao/blade-feather-icons": "^4.0",
+        "codeat3/blade-iconpark": "^1.6",
         "filament/filament": "^3.2",
         "guzzlehttp/guzzle": "^7.9",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
-        "moonshine/moonshine": "^2.22"
+        "moonshine/moonshine": "^2.22",
+        "saade/blade-iconsax": "^1.2"
     },
     "require-dev": {
         "doctrine/dbal": "^3.8",

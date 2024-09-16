@@ -24,12 +24,12 @@ class ApiController extends Controller
             // dd($data);
 
             // Handle the retrieved weather data as needed (e.g., pass it to a view)
-            return view('welcome', ['data' => $data]);
+            return view('main', ['data' => $data]);
 
         } catch (\Exception $e) {
             // Handle any errors that occur during the API request
             $data = "in";
-            return view('welcome', ['data' => $data]);
+            return view('main', ['data' => $data]);
             // return view('api_error', ['error' => $e->getMessage()]);
         }
     }
