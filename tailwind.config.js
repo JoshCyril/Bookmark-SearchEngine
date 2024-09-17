@@ -1,20 +1,33 @@
+import defaultTheme from 'tailwindcss/defaultTheme';
+import forms from '@tailwindcss/forms';
+import typography from '@tailwindcss/typography';
+
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
-        "./resources/**/*.blade.php",
+        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+        './vendor/laravel/jetstream/**/*.blade.php',
+        './storage/framework/views/*.php',
+        './resources/views/**/*.blade.php',
         "./resources/**/*.js",
         "./resources/**/*.vue",
       ],
+
     theme: {
-      extend: {},
+        extend: {
+            fontFamily: {
+                sans: ['Poppins', ...defaultTheme.fontFamily.sans],
+            },
+        },
     },
+
     plugins: [
-        require('daisyui'),
+        require('daisyui'), forms, typography
     ],
 
     daisyui: {
         themes: [
-          {
+        {
             mytheme: {
                 "primary": "#01E3D8",
                 "secondary": "#00F5A0",
@@ -25,9 +38,9 @@ export default {
                 "success": "#00ff00",
                 "warning": "#00ff00",
                 "error": "#ff0000",
-              },
             },
-          ],
+            },
+        ],
         },
 
-}
+};
