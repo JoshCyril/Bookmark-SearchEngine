@@ -15,11 +15,15 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        {{-- <!-- Styles -->
-        @livewireStyles --}}
+        <!-- Styles -->
+        @livewireStyles
     </head>
-    <body>
-        <div class="font-sans text-gray-900 antialiased">
+    <body class="bg-base-200 font-sans antialiased">
+        <x-banner />
+
+        {{-- @yield('hero') --}}
+
+        <div class="text-textc bg-base-200 font-sans antialiased">
             {{ $slot }}
         </div>
 

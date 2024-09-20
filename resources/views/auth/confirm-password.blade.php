@@ -1,7 +1,7 @@
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
-            <x-authentication-card-logo />
+            <span class="inline-flex items-center"><x-authentication-card-logo /> <span class="ml-2 bg-gradient-to-r from-secondary to-accent bg-clip-text text-2xl font-bold text-transparent">Confirm Password</span></span>
         </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
@@ -15,10 +15,10 @@
 
             <div>
                 <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" autofocus />
+                <x-input id="password" class="mt-1 block w-full" type="password" name="password" required autocomplete="current-password" autofocus />
             </div>
 
-            <div class="flex justify-end mt-4">
+            <div class="mt-4 flex justify-end">
                 <x-button class="ms-4">
                     {{ __('Confirm') }}
                 </x-button>

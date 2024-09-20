@@ -14,20 +14,18 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+        @livewireStyles
     </head>
-    <body class="bg-base font-sans antialiased">
+    <body class="bg-base-200 font-sans antialiased">
         <x-banner />
 
             @include('layouts.partials.header')
 
-            @yield('hero')
-
-            <main class="container mx-auto flex flex-grow px-5">
+            <main  class="item-center flex w-full justify-center py-6">
                 {{ $slot }}
             </main>
 
-            @include('layouts.partials.footer')
+            {{-- @include('layouts.partials.footer') --}}
 
         @stack('modals')
 

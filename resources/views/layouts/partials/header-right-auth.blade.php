@@ -1,6 +1,15 @@
 <!-- Settings Dropdown -->
 <ul class="ml-auto flex items-center space-x-8 lg:flex">
 
+    <select class="select select-bordered select-sm w-full max-w-xs">
+        <option selected disabled>Collections</option>
+            @foreach(Auth::user()->collections as $collection)
+                <option value="{{ $collection->id }}" >{{ $collection->title}}</option>
+            @endforeach
+
+            {{-- dd($profile_data); --}}
+    </select>
+
     <x-dropdown align="right" width="48">
         <x-slot name="trigger">
             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
@@ -27,12 +36,12 @@
 
         <x-slot name="content">
             <!-- Account Management -->
-            <div class="block px-4 py-2 text-xs text-gray-400">
-                {{ __('Manage Account') }}
+            <div class="block px-4 py-2 font-bold text-gray-400">
+                Hello, {{Auth::user()->name}}
             </div>
 
             <x-dropdown-link wire:navigate href="{{ route('profile.show') }}">
-                {{ __('Profile') }}
+                <span class="inline-flex items-center"><x-heroicon-s-user class="text-icon mr-2 h-4 w-4"/> Profile</span>
             </x-dropdown-link>
 
             {{-- <x-dropdown-link wire:navigate href="{{ route('filament.admin.auth.login') }}">
@@ -50,7 +59,7 @@
                 </x-dropdown-link>
             @endif
 
-            <div class="border-t border-gray-200"></div>
+            <div class="divider m-0"></div>
 
             <!-- Authentication -->
             <form method="POST" action="{{ route('logout') }}" x-data>
@@ -58,7 +67,9 @@
 
                 <x-dropdown-link href="{{ route('logout') }}"
                          @click.prevent="$root.submit();">
-                    {{ __('Log Out') }}
+
+                         <span class="inline-flex items-center"><x-iconsax-bul-logout class="text-icon mr-2 h-4 w-4"/> Log Out</span>
+
                 </x-dropdown-link>
             </form>
         </x-slot>

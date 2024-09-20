@@ -1,7 +1,7 @@
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
-            <x-authentication-card-logo />
+            <span class="inline-flex items-center"><x-authentication-card-logo /> <span class="ml-2 bg-gradient-to-r from-secondary to-accent bg-clip-text text-2xl font-bold text-transparent">Verify Email</span></span>
         </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
@@ -9,7 +9,7 @@
         </div>
 
         @if (session('status') == 'verification-link-sent')
-            <div class="mb-4 font-medium text-sm text-green-600">
+            <div class="mb-4 text-sm font-medium text-green-600">
                 {{ __('A new verification link has been sent to the email address you provided in your profile settings.') }}
             </div>
         @endif
@@ -28,14 +28,14 @@
             <div>
                 <a
                     href="{{ route('profile.show') }}"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                     {{ __('Edit Profile') }}</a>
 
                 <form method="POST" action="{{ route('logout') }}" class="inline">
                     @csrf
 
-                    <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ms-2">
+                    <button type="submit" class="ms-2 rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                         {{ __('Log Out') }}
                     </button>
                 </form>

@@ -22,7 +22,7 @@ export default {
     },
 
     plugins: [
-        require('daisyui'), forms, typography
+        require('daisyui'), typography
     ],
 
     daisyui: {
@@ -34,6 +34,7 @@ export default {
                 "accent": "#00D9F5",
                 "neutral": "#232323",
                 "base-100": "#282828",
+                "icon": "#304E52",
                 "info": "#0000ff",
                 "success": "#00ff00",
                 "warning": "#00ff00",

@@ -10,6 +10,8 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -62,4 +64,15 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function urls(): HasMany
+    {
+        return $this->hasMany(Url::class);
+    }
+
+    public function collections(): HasMany
+    {
+        return $this->hasMany(Collection::class);
+    }
+
 }

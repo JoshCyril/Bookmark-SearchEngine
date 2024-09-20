@@ -1,4 +1,4 @@
-<ul class="flex items-center ml-auto space-x-8 lg:flex">
+<ul class="ml-auto flex items-center space-x-8 lg:flex">
     <x-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')" :index="1">
         {{ __('Login') }}
     </x-nav-link>

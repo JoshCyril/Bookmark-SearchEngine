@@ -2,20 +2,17 @@
 
     @section('hero')
 
-    <div class="mx-auto px-4 py-16 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-xl lg:px-8 lg:py-20">
-        <div class="max-w-xl sm:mx-auto lg:max-w-2xl">
-          <div class="mb-16 flex flex-col sm:mb-0 sm:text-center">
-            <a href="/" class="mb-6 sm:mx-auto">
+    <div class="h-dvh w-full px-4 pt-24">
+          <div class="flex flex-col sm:mb-0 sm:text-center">
+            <div class="mb-6 sm:mx-auto">
               <div class="bg-primary-50 flex h-12 w-12 items-center justify-center rounded-full">
-                <svg class="text-primary h-10 w-10" stroke="currentColor" viewBox="0 0 52 52">
-                  <polygon stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" points="29 13 14 29 25 29 23 39 38 23 27 23"></polygon>
-                </svg>
+                <x-heroicon-m-bookmark-square class="h-10 w-10 text-secondary"/>
               </div>
-            </a>
+            </div>
             <div class="mb-10 max-w-xl sm:text-center md:mx-auto md:mb-12 lg:max-w-2xl">
-              <h2 class="mb-6 max-w-lg font-sans text-3xl font-bold leading-none tracking-tight text-gray-900 sm:text-4xl md:mx-auto">
+              <h3 class="text-textc mb-6 max-w-lg font-sans text-2xl font-bold leading-none tracking-tight sm:text-3xl md:mx-auto">
                 <span class="relative inline-block">
-                  <svg viewBox="0 0 52 24" fill="currentColor" class="absolute left-0 top-0 z-0 -ml-20 -mt-8 hidden w-32 text-purple-300 sm:block lg:-ml-28 lg:-mt-10 lg:w-32">
+                  <svg viewBox="0 0 52 24" fill="currentColor" class="absolute left-0 top-0 z-0 -ml-20 -mt-8 hidden w-32 text-accent opacity-50 sm:block lg:-ml-28 lg:-mt-10 lg:w-32">
                     <defs>
                       <pattern id="e77df901-b9d7-4b9b-822e-16b2d410795b" x="0" y="0" width=".135" height=".30">
                         <circle cx="1" cy="1" r=".7"></circle>
@@ -23,18 +20,28 @@
                     </defs>
                     <rect fill="url(#e77df901-b9d7-4b9b-822e-16b2d410795b)" width="52" height="24"></rect>
                   </svg>
-                  <span class="relative">Welcome</span>
-                </span>
-                to Kite 🪁
-              </h2>
-              <p class="text-base text-gray-700 md:text-lg">
-                Find your best quote & share it here.
+                  <span class="relative text-accent">Bookmark</span>
+                </span >
+
+                <span class="bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">Search Engine</span>
+              </h3>
+              <p class="text-textc md:text-md text-base md:ml-1">
+                Smarter Search. Visualise Results. Faster Insights.
               </p>
             </div>
           </div>
-        </div>
       </div>
     @endsection
 
+    @section('content')
+        <x-welcome/>
+    @endsection
+
+
+    @auth
+        @yield('content')
+    @else
+        @yield('hero')
+    @endauth
 
 </x-app-layout>
