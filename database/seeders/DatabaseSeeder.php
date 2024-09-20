@@ -25,22 +25,12 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory(4)->create();
-        // Collection::factory(5)->create();
-        // Category::factory(10)->create();
-        // Url::factory(20)->create();
+        Collection::factory(5)->create();
+        Url::factory(20)->create();
 
-        // \Database\Factories\CategoryCollectionFactory::factory(50)->create();
-        // \Database\Factories\CategoryUrlFactory::factory(100)->create();
+        // Collection::factory(5)
+        //     ->hasAttached(Url::factory(5)->create()
+        // )->create();
 
-
-        Category::factory()
-        ->count(5)
-        ->hasAttached(Collection::factory()->count(1)
-        )->create();
-
-        Category::factory()
-        ->count(5)
-        ->hasAttached(Url::factory()->count(2))
-        ->create();
     }
 }

@@ -15,11 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\User::class, 'user_id');
             $table->foreignIdFor(\App\Models\Collection::class, 'collection_id');
-            $table->string('title', 2048);
             $table->string('url');
-            $table->string('thumbnail')->nullable();
-            $table->longText('body');
-            $table->boolean('active')->default(false);
             $table->timestamps();
             $table->softDeletes();
 

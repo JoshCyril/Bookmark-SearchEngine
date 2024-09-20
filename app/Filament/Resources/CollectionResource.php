@@ -16,6 +16,12 @@ use Illuminate\Support\Str;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Repeater;
+use Illuminate\Support\Facades\Auth;
+
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Wizard;
+use Filament\Forms\Components\MarkdownEditor;
 
 class CollectionResource extends Resource
 {
@@ -25,59 +31,58 @@ class CollectionResource extends Resource
 
     protected static ?string $navigationGroup = 'Content';
 
+    // protected function mutateFormDataBeforeCreate(array $data): array
+    // {
+    //     $data['user_id'] = Auth::user()->id;
+    //     @dd($data);
+    //     return $data;
+    // }
+
     public static function form(Form $form): Form
     {
+        $user = Auth::user();
         return $form
-            ->schema([
-                Forms\Components\Card::make()
+        ->schema([
+            Wizard::make([
+                Wizard\Step::make('Info')
                 ->schema([
+                    TextInput::make('title')
+                        ->required()->minLength(4)->maxLength (2048),
+                    TextInput::make('user_id')
+                        ->label('user_id')
+                        ->default($user->id)
+                        // ->hidden(true)
+                        // ->disabled(),
+                ]),
 
-                Forms\Components\TextInput::make('title')
-                    ->required()->minLength(4)->maxLength (2048)
-                    ->reactive()
-                    ->afterStateUpdated(function(string $operation, $state, Forms\Set $set){
-                        if($operation === 'edit'){
-                            return;
-                        }
-
-                    $set('slug', Str::slug($state));
-                }),
-                Forms\Components\TextInput::make('slug')
-                    ->required()
-                    ->maxLength(2048),
-                Forms\Components\RichEditor::make('body')
-                    ->required()
-                    ->columnSpanFull(),
-                Forms\Components\Toggle::make('active')
-                    ->required(),
-                Forms\Components\DateTimePicker::make('published_at')
-                    ->required(),
-            ])->columnSpan(8),
-
-            Forms\Components\Card::make()
-                    ->schema([
-                        Forms\Components\FileUpload::make('thumbnail'),
-                        Forms\Components\Select::make('categories')
-                            ->multiple()
-                            ->relationship('categories', 'title'),
-                        Select::make('user_id')
-                            ->label('Owner')
-                            ->relationship('user', 'name')
-                            ->default(auth()->id())
-                            // ->hidden(true)
-                            ->disabled(),
-                ])->columnSpan(4),
-
-            Forms\Components\Card::make()
+                Wizard\Step::make('urls')
                 ->schema([
-                        Repeater::make('urls')
-                        ->simple(
-                            Select::make('urls')
-                            ->relationship('urls', 'url')
-                            // ->disabled(),
-                        )
-                ])->columnSpan(12),
-            ])->columns(12);
+                    MarkdownEditor::make('content')
+                        ->toolbarButtons([
+                            'link',
+                            ])
+                ]),
+            ])
+        ]);
+
+
+            // Forms\Components\Card::make()
+            //     ->schema([
+            //             Repeater::make('urls')
+            //             ->simple(
+            //                 Select::make('collection')
+            //                 ->relationship('urls', 'url')
+            //                 // ->disabled(),
+            //             )
+            //     ])->columnSpan(12),
+            // ])->columns(12);
+
+            // CreateAction::make()
+            //     ->mutateFormDataUsing(function (array $data): array {
+            //                 $data['user_id'] = Auth::user()->id;
+
+            //         return $data;
+            //     });
     }
 
     public static function table(Table $table): Table
@@ -88,19 +93,8 @@ class CollectionResource extends Resource
                     ->label('Owner')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('title')
-                    ->description(fn (Collection $record): string => $record->body),
-                Tables\Columns\IconColumn::make('active')
-                    ->boolean(),
-                Tables\Columns\ImageColumn::make('thumbnail')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('published_at')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('title'),
+                TextColumn::make('urls_count')->counts('urls')
             ])
             ->filters([
                 //

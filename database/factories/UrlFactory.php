@@ -24,11 +24,7 @@ class UrlFactory extends Factory
             'collection_id' => fake()->randomElement(
                 \App\Models\Collection::pluck('id', 'id')->toArray()
             ), // picks id from Collection table randomly
-            'title'=>$title,
-            'url'=>fake()->url(),
-            'thumbnail'=> fake()->imageUrl(640, 480, null, true),
-            'body'=> fake()->text(100),
-            'active' => fake()->boolean(30),
+            'url'=>fake()->url()
         ];
     }
 }

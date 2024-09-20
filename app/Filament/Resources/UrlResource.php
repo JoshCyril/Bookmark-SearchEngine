@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Support\Facades\Auth;
 
 class UrlResource extends Resource
 {
@@ -27,38 +28,19 @@ class UrlResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $user = Auth::user();
         return $form
         ->schema([Forms\Components\Card::make()
             ->schema([
-                Forms\Components\TextInput::make('title')
-                ->required()->minLength(4)->maxLength (2048)
-                ->reactive()
-                ->afterStateUpdated(function(string $operation, $state, Forms\Set $set){
-                        if($operation === 'edit'){
-                            return;
-                        }
-
-                    $set('slug', Str::slug($state));
-                }),
                 Forms\Components\TextInput::make('url')
                     ->required()
                     ->url()
                     ->suffixIcon('heroicon-m-globe-alt')
                     ->maxLength(255),
-                Forms\Components\Textarea::make('body')
-                    ->required()
-                    ->columnSpanFull(),
-                Forms\Components\Toggle::make('active')
-                    ->required(),
             ])->columnSpan(8),
 
             Forms\Components\Card::make()
                     ->schema([
-                        Forms\Components\FileUpload::make('thumbnail'),
-                        Forms\Components\Select::make('categories')
-                            ->required()
-                            ->multiple()
-                            ->relationship('categories', 'title'),
                         Select::make('collection_id')
                             ->required()
                             ->label('Collection')
@@ -66,9 +48,9 @@ class UrlResource extends Resource
                         Select::make('user_id')
                             ->label('Owner')
                             ->relationship('user', 'name')
-                            ->default(auth()->id())
+                            ->default($user->id)
                             // ->hidden(true)
-                            ->disabled(),
+                            // ->disabled(),
                 ])->columnSpan(4)
             ])->columns(12);
     }
@@ -78,23 +60,9 @@ class UrlResource extends Resource
         return $table
             ->columns([
 
-                // TextColumn::make('title')
-                //     ->description(fn (Url $record): string => $record->body),
-                Tables\Columns\TextColumn::make('url')
-                    ->searchable(),
-                Tables\Columns\IconColumn::make('active')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('collection.title')
-                    ->searchable(),
-                Tables\Columns\ImageColumn::make('thumbnail')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                // Tables\Columns\TextColumn::make('user.name')
-                //     ->numeric()
-                //     ->sortable(),
+            Tables\Columns\TextColumn::make('url')
+            ->searchable()
+            ->sortable()
             ])
             ->filters([
                 //
