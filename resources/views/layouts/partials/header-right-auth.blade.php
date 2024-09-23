@@ -44,6 +44,21 @@
                 <span class="inline-flex items-center"><x-heroicon-s-user class="text-icon mr-2 h-4 w-4"/> Profile</span>
             </x-dropdown-link>
 
+
+            @can('view-admin', App\Models\User::class)
+                <x-dropdown-link  href="{{ route('filament.app.resources.users.index') }}">
+                    <span class="inline-flex items-center"><x-heroicon-s-wrench-screwdriver class="text-icon mr-2 h-4 w-4"/> Admin</span>
+                </x-dropdown-link>
+            @endcan
+
+
+
+            @can('view-default', App\Models\User::class)
+            <x-dropdown-link  href="{{ route('filament.app.resources.collections.index') }}">
+                <span class="inline-flex items-center"><x-heroicon-s-rectangle-group class="text-icon mr-2 h-4 w-4"/> Collections</span>
+            </x-dropdown-link>
+        @endcan
+
             {{-- <x-dropdown-link wire:navigate href="{{ route('filament.admin.auth.login') }}">
                 {{ __('Admin') }}
 

@@ -18,19 +18,45 @@ class DatabaseSeeder extends Seeder
     {
 
         User::factory()->create([
-            'name' => 'Josh',
-            'email' => 'Josh@mail.com',
+            'name' => 'Admin User',
+            'email' => 'admin@mail.com',
             'password' => 'P@ssw0rd',
-            'remember_token' => '50q3JXDX8a'
+            'remember_token' => '50q3JXDX8a',
+            'profile_photo_path'=> 'profile-photos/2.png',
+            'role'=>'ADMIN'
         ]);
 
-        User::factory(4)->create();
-        Collection::factory(5)->create();
-        Url::factory(20)->create();
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@mail.com',
+            'password' => 'P@ssw0rd',
+            'remember_token' => '50q3JXDX8a',
+            'profile_photo_path'=> 'profile-photos/1.png'
+        ]);
 
-        // Collection::factory(5)
-        //     ->hasAttached(Url::factory(5)->create()
-        // )->create();
+        // Collection::factory(5)->create();
+        // Url::factory(100)->create();
+
+
+        $coll = ['job', 'university', 'coding', 'personal', 'extra'];
+        foreach ($coll as $line) {
+            Collection::create([
+                'user_id' => 2,
+                'title'=>$line
+            ]);
+        }
+
+
+        $file = file('urls.txt');
+        foreach ($file as $line) {
+            Url::create([
+                'user_id' => 2,
+                'collection_id' => fake()->randomElement(
+                    \App\Models\Collection::pluck('id', 'id')->toArray()
+                ), // picks id from Collection table randomly
+                'url'=>$line
+            ]);
+        }
 
     }
 }

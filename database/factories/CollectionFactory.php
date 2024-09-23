@@ -17,11 +17,13 @@ class CollectionFactory extends Factory
      */
     public function definition(): array
     {
-        $title = fake()->unique()->word();
+        $coll = ['job', 'university', 'coding', 'personal', 'extra'];
+        $title = fake()->unique()->randomElement($coll);
         return [
-            'user_id' => fake()->randomElement(
-                \App\Models\User::pluck('id', 'id')->toArray()
-            ), // picks id from UserDetails table randomly
+            // 'user_id' => fake()->randomElement(
+            //     \App\Models\User::pluck('id', 'id')->toArray()
+            // ), // picks id from Users table randomly
+            'user_id' => 2,
             'title'=>$title
         ];
     }

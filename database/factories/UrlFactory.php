@@ -16,15 +16,18 @@ class UrlFactory extends Factory
      */
     public function definition(): array
     {
-        $title = fake()->unique()->word();
+        $file = file('urls.txt');
+        $val = fake()->unique()->randomElement($file);
+
         return [
-            'user_id' => fake()->randomElement(
-                \App\Models\User::pluck('id', 'id')->toArray()
-            ), // picks id from UserDetails table randomly
+            // 'user_id' => fake()->randomElement(
+            //     \App\Models\User::pluck('id', 'id')->toArray()
+            // ), // picks id from UserDetails table randomly
             'collection_id' => fake()->randomElement(
                 \App\Models\Collection::pluck('id', 'id')->toArray()
             ), // picks id from Collection table randomly
-            'url'=>fake()->url()
+            'url'=>$val,
+            'user_id' => 2
         ];
     }
 }

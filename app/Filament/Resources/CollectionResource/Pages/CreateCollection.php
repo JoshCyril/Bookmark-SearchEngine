@@ -9,4 +9,11 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateCollection extends CreateRecord
 {
     protected static string $resource = CollectionResource::class;
+
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        $data['user_id'] = auth()->id();
+
+        return $data;
+    }
 }

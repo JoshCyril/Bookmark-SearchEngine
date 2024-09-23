@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Facades\Auth;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Split;
 
 class UrlResource extends Resource
 {
@@ -26,43 +28,53 @@ class UrlResource extends Resource
 
     protected static ?string $navigationGroup = 'Content';
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->where('user_id', auth()->id());
+    }
+
     public static function form(Form $form): Form
     {
         $user = Auth::user();
         return $form
-        ->schema([Forms\Components\Card::make()
-            ->schema([
+        ->schema([
+            Split::make([
+                Section::make([
                 Forms\Components\TextInput::make('url')
                     ->required()
                     ->url()
                     ->suffixIcon('heroicon-m-globe-alt')
                     ->maxLength(255),
-            ])->columnSpan(8),
+                ]),
 
-            Forms\Components\Card::make()
-                    ->schema([
-                        Select::make('collection_id')
-                            ->required()
-                            ->label('Collection')
-                            ->relationship('collection', 'title'),
-                        Select::make('user_id')
-                            ->label('Owner')
-                            ->relationship('user', 'name')
-                            ->default($user->id)
-                            // ->hidden(true)
-                            // ->disabled(),
-                ])->columnSpan(4)
-            ])->columns(12);
+            Section::make([
+                Select::make('collection_id')
+                    ->required()
+                    ->label('Collection')
+                    // ->options(\App\Models\Collection::orderBy('id', 'asc')->pluck('title', 'id')->toArray()),
+                    ->relationship('collection', 'title'),
+                // Select::make('user_id')
+                //     ->label('Owner')
+                //     ->relationship('user', 'name')
+                    // ->default($user->id)
+                    // ->hidden(false)
+                    // ->disabled(),
+                ])->grow(true),
+            ])->from('md')
+            ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-
+            Tables\Columns\TextColumn::make('collection.title')
+                ->searchable()
+                ->sortable(),
             Tables\Columns\TextColumn::make('url')
-            ->searchable()
-            ->sortable()
+                ->searchable()
+                ->sortable(),
+
             ])
             ->filters([
                 //

@@ -21,4 +21,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+// Route::get('/db', function () {
+//     return redirect('/');
+// });
+
 require __DIR__.'/auth.php';

@@ -2,19 +2,28 @@
     $value = $res['distances']; // Your input value
 
     // Check if the value is 0, if so return 100%
-    if ($value == 0) {
-        $percentage = 100;
-    } else {
-        // Convert to percentage and round to nearest integer
-        $percentage = round($value * 100);
-    }
+
+    $percentage = round(-(($value*100)-100))
+
+    // if ($value == 0) {
+    //     $percentage = 100;
+    // } else {
+    //     // Convert to percentage and round to nearest integer
+    //     $percentage = round($value * 100);
+    // }
 @endphp
 
 <div class="card-body relative z-10 overflow-hidden p-4">
-    @if ($percentage <= 100 and $percentage >= 70)
+    @if ($percentage === 100)
         <div class="absolute right-0 top-0">
             <div class="absolute -right-8 top-4 h-8 w-32">
-                <div class="h-full w-full rotate-45 transform bg-accent/20 text-center font-semibold leading-8 text-white">{{ $percentage }}%</div>
+                <div class="h-full w-full rotate-45 transform bg-secondary text-base font-bold leading-8 text-white">Best</div>
+            </div>
+        </div>
+    @elseif ($percentage < 100 and $percentage >= 50)
+        <div class="absolute right-0 top-0">
+            <div class="absolute -right-8 top-4 h-8 w-32">
+                <div class="h-full w-full rotate-45 transform bg-accent text-base font-bold leading-8 text-white">{{ $percentage }}%</div>
             </div>
         </div>
     @endif

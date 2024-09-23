@@ -22,6 +22,7 @@ use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Components\MarkdownEditor;
+use App\Models\User;
 
 class CollectionResource extends Resource
 {
@@ -30,6 +31,15 @@ class CollectionResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-group';
 
     protected static ?string $navigationGroup = 'Content';
+
+    private function viewAdmin(User $user) : bool{
+        return $user->isAdmin();
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->where('user_id', auth()->id());
+    }
 
     // protected function mutateFormDataBeforeCreate(array $data): array
     // {
@@ -43,26 +53,24 @@ class CollectionResource extends Resource
         $user = Auth::user();
         return $form
         ->schema([
-            Wizard::make([
-                Wizard\Step::make('Info')
+            Forms\Components\Card::make()
                 ->schema([
                     TextInput::make('title')
                         ->required()->minLength(4)->maxLength (2048),
-                    TextInput::make('user_id')
-                        ->label('user_id')
-                        ->default($user->id)
+                    // TextInput::make('user_id')
+                    //     ->label('user_id')
+                    //     ->default($user->id)
                         // ->hidden(true)
                         // ->disabled(),
-                ]),
-
-                Wizard\Step::make('urls')
-                ->schema([
-                    MarkdownEditor::make('content')
-                        ->toolbarButtons([
-                            'link',
-                            ])
-                ]),
-            ])
+            ])->columnSpan(12),
+            // Forms\Components\Card::make()
+            //     ->schema([
+            //         Repeater::make('urls')
+            //         ->simple(
+            //             Select::make('urls')
+            //             ->relationship('urls', 'url')
+            //         )
+            // ])->columnSpan(8),
         ]);
 
 
@@ -89,10 +97,6 @@ class CollectionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.name')
-                    ->label('Owner')
-                    ->numeric()
-                    ->sortable(),
                 TextColumn::make('title'),
                 TextColumn::make('urls_count')->counts('urls')
             ])

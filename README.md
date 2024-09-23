@@ -76,3 +76,6 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 `sail npm run dev`
 
 `sail artisan serve`
+
+
+'sail artisan vendor:publish --tag=filament-config'
