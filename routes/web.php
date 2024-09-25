@@ -5,7 +5,7 @@ use App\Http\Controllers\ApiController;
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', HomeController::class)->name('home');
+// Route::get('/', [HomeController::class, 'storeDropdownValue'])->name('home');
 
 // Route::get('/', function () {
 //     return view('dashboard');
@@ -14,6 +14,11 @@ Route::get('/', HomeController::class)->name('home');
 Route::post('/call-api',[ApiController::class, 'callApi'] )->name('call.api');
 
 Route::match(['get', 'post'], '/', [HomeController::class, 'index'])->name('home');
+
+// Route::post('/process-dropdown', function (\Illuminate\Http\Request $request) {
+//     // This route doesn't do anything, because the middleware will handle the session storage.
+//     return redirect()->back();
+// })->name('process.dropdown');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

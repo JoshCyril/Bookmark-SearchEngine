@@ -27,8 +27,10 @@
 
             {{-- @include('layouts.partials.footer') --}}
 
+
         @stack('modals')
 
         @livewireScripts
+        {{-- <script src="{{ asset('js/selectHandler.js') }}"></script> --}}
     </body>
 </html>

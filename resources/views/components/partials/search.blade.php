@@ -17,14 +17,7 @@
     <div role="tabpanel" class="tab-content p-10">
         {{-- Image Search --}}
 
-        <div class="flex justify-center gap-2">
-            <input
-            type="file"
-            class="file-input file-input-bordered w-full max-w-xs outline outline-1 outline-primary" />
-
-            <button class="btn btn-primary font-bold uppercase">Search</button>
-
-        </div>
+        @livewire('image-upload')
 
     </div>
 
@@ -40,12 +33,26 @@
                     </button>
                     <button class="btn btn-primary btn-sm font-bold uppercase">Search</button>
                 </div>
+            <div class="">
+<x-markdown>
+# Your Code
+```php
+return [
+    'code_highlighting' => [
+        /*
+         * To highlight code, we'll use Shiki under the hood. Make sure it's installed.
+         *
+         * More info: https://spatie.be/docs/laravel-markdown/v1/installation-setup
+         */
+        'enabled' => true,
+    ]
+];
 
+echo 'Hello world';
+```
+</x-markdown>
+            </div>
 
-
-                <pre><code>without prefixThere</code></pre>
-                <pre><code>    There</code></pre>
-                <pre><code>without </code></pre>
             </div>
 
             <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">

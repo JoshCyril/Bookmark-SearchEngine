@@ -2,8 +2,8 @@
 
     @section('hero')
 
-    <div class="h-dvh w-full px-4 pt-24">
-          <div class="flex flex-col sm:mb-0 sm:text-center">
+    <div class="relative h-dvh w-full px-4">
+          <div class="z-20 flex flex-col py-12 sm:mb-0 sm:text-center">
             <div class="mb-6 sm:mx-auto">
               <div class="bg-primary-50 flex h-12 w-12 items-center justify-center rounded-full">
                 <x-heroicon-m-bookmark-square class="h-10 w-10 text-secondary"/>
@@ -30,6 +30,8 @@
               </p>
             </div>
           </div>
+
+          <img class="absolute bottom-0 left-0 z-10 h-full w-full object-cover" src="{{ asset('storage/assets/img/bg.png') }}">
       </div>
     @endsection
 

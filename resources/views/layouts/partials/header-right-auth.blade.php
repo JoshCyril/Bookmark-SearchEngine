@@ -1,14 +1,14 @@
 <!-- Settings Dropdown -->
 <ul class="ml-auto flex items-center space-x-8 lg:flex">
 
-    <select class="select select-bordered select-sm w-full max-w-xs">
-        <option selected disabled>Collections</option>
-            @foreach(Auth::user()->collections as $collection)
-                <option value="{{ $collection->id }}" >{{ $collection->title}}</option>
-            @endforeach
+        {{-- <select class="select select-bordered select-sm w-full max-w-xs" id="mySelect">
+            <option selected disabled>Collections</option>
+                @foreach(Auth::user()->collections as $collection)
+                    <option value="{{ $collection->id }}" >{{ $collection->title}}</option>
+                @endforeach
+        </select> --}}
 
-            {{-- dd($profile_data); --}}
-    </select>
+        @livewire('dropdown-component')
 
     <x-dropdown align="right" width="48">
         <x-slot name="trigger">
