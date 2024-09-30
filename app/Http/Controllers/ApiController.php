@@ -40,37 +40,13 @@ class ApiController extends Controller
     // Handle the form submission and API call
     public function index(Request $request)
     {
-        $data = null;  // Initialize data as null
+        $apiBase = "http://localhost:3000";
+        $data = null;
 
-        // // Validate the input
-        // $request->validate([
-        //     'name' => 'required|string',
-        // ]);
-
-        // API URL (you can replace this with the real API endpoint)
-        // $apiUrl = "http://host.docker.internal:3000/";
-
-        // $user = Auth::user();
-
-        // // Call the API with the input
-        // $response = Http::post($apiUrl, [
-        //     // 'user_id' => $user->id,
-        //     // 'collection_id' => $request->input('collection_id'),
-        //     'query' => $request->input('search_text'),
-        // ]);
-
-        // // Decode the JSON response
-        // $data = $response->json();
-
-        // Return the view with the API response
-        // return view('/', ['data' => $data]);
-
-
-        // If the request is POST (form submitted)
         if ($request->isMethod('post')) {
 
             // API URL (replace with your actual API endpoint)
-            $apiUrl = "http://host.docker.internal:3000/search";
+            $apiUrl = $apiBase."/search/text";
             $user = Auth::user();
 
             // Call the API with the input data

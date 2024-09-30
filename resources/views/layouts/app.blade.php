@@ -14,6 +14,7 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         @livewireStyles
     </head>
     <body class="bg-base-200 font-sans antialiased">
@@ -29,6 +30,7 @@
 
 
         @stack('modals')
+        @stack('scripts')
 
         @livewireScripts
         {{-- <script src="{{ asset('js/selectHandler.js') }}"></script> --}}

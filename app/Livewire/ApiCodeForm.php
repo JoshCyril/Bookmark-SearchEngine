@@ -6,38 +6,33 @@ use Livewire\Component;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 
-class ApiForm extends Component
+class ApiCodeForm extends Component
 {
-    public $search_text;
-    public $response;
+    public $search_code;
     public $colAuth;
+
+    public function save()
+    {
+        $this->dispatch('apiSave', $this->search_code);
+    }
 
     public function submit()
     {
 
         // API URL
         $apiBase = "http://host.docker.internal:3000";
-        $apiUrl = $apiBase.'/search/text';
-        // $colVal = config('coll.col_val');
-        // // $colAuth = "E". Auth::id() . "c" . $colVal;
-        // $colAuth = "E1c3";
+        $apiUrl = $apiBase.'/search/code';
 
         // Call the API
-
-        // @dd($this->colAuth);
         $response = Http::post($apiUrl, [
-            'query' => $this->search_text,
+            'query' => $this->search_code,
             'coll' => $this->colAuth,
             'count' => 4,
         ]);
 
-
-
         $responseData = [];
 
         $result = $response->json();
-
-        // @dd($result);
 
         foreach ($result['ids'][0] as $index => $id) {
             $responseData[] = [
@@ -48,14 +43,14 @@ class ApiForm extends Component
             ];
         }
 
-
+        // @dd($responseData);
 
         // Emit the result to the Result component
-        $this->dispatch('apiResponseReceived', $responseData);
+        $this->dispatch('apiCode', $responseData);
     }
 
     public function render()
     {
-        return view('livewire.api-form');
+        return view('livewire.api-code-form');
     }
 }
